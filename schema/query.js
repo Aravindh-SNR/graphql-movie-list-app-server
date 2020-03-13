@@ -30,14 +30,14 @@ const RootQuery = new GraphQLObjectType({
             type: new GraphQLList(MovieType),
             resolve: (parent, args) => {
                 // Return all the movie records
-                return Movie.find();
+                return Movie.find().sort({year: 1});
             }
         },
         directors: {
             type: new GraphQLList(DirectorType),
             resolve: (parent, args) => {
                 // Return all the director records
-                return Director.find();
+                return Director.find().sort({name: 1});
             }
         }
     }

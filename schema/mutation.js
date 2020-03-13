@@ -14,29 +14,41 @@ const Mutation = new GraphQLObjectType({
             type: MovieType,
             args: {
                 title: {type: new GraphQLNonNull(GraphQLString)},
-                genre: {type: new GraphQLNonNull(GraphQLString)},
+                year: {type: new GraphQLNonNull(GraphQLInt)},
                 directorId: {type: new GraphQLNonNull(GraphQLID)}
             },
             resolve: (parent, args) => {
-                const {title, genre, directorId} = args;
+                const {title, year, directorId} = args;
 
-                // Create and store a new Movie document in MongoDB
-                const movie = new Movie({title, genre, directorId});
+                // Create and store a new Movie document in db
+                const movie = new Movie({title, year, directorId});
                 return movie.save();
             }
         },
         addDirector: {
             type: DirectorType,
             args: {
-                name: {type: new GraphQLNonNull(GraphQLString)},
-                age: {type: new GraphQLNonNull(GraphQLInt)}
+                name: {type: new GraphQLNonNull(GraphQLString)}
             },
             resolve: (parent, args) => {
-                const {name, age} = args;
+                const {name} = args;
 
-                // Create and store a new Director document in MongoDB
-                const director = new Director({name, age});
+                // Create and store a new Director document in db
+                const director = new Director({name});
                 return director.save();
+            }
+        },
+        deleteMovie: {
+            type: GraphQLInt,
+            args: {
+                id: {type: new GraphQLNonNull(GraphQLID)}
+            },
+            async resolve(parent, args) {
+                // Using async function because null is returned if the return statement is inside a callback
+
+                // Delete movie record with given id from db
+                let result = await Movie.deleteOne({_id: args.id});
+                return result.deletedCount;
             }
         }
     }

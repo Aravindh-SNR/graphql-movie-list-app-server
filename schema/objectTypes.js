@@ -11,7 +11,7 @@ const MovieType = new GraphQLObjectType({
     fields: () => ({
         id: {type: GraphQLID},
         title: {type: GraphQLString},
-        genre: {type: GraphQLString},
+        year: {type: GraphQLInt},
         director: {
             type: DirectorType,
             resolve: (parent, args) => {
@@ -27,12 +27,11 @@ const DirectorType = new GraphQLObjectType({
     fields: () => ({
         id: {type: GraphQLID},
         name: {type: GraphQLString},
-        age: {type: GraphQLInt},
         movies: {
             type: new GraphQLList(MovieType),
             resolve: (parent, args) => {
                 // Return list of movies directed by the given director
-                return Movie.find({directorId: parent.id});
+                return Movie.find({directorId: parent.id}).sort({year: 1});
             }
         }
     })

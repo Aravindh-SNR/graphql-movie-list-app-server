@@ -4,8 +4,7 @@ const mongoose = require('mongoose');
 const {Schema} = mongoose;
 
 const directorSchema = new Schema({
-    name: String,
-    age: Number
+    name: String
 });
 
 module.exports = mongoose.model('Director', directorSchema);

@@ -9,6 +9,12 @@ const app = express();
 // Allow cross-orgin requests
 app.use(cors());
 
+// Use middleware returned by the graphqlHTTP function to respond to requests
+app.use('/graphql', graphqlHTTP({
+    schema,
+    graphiql: true
+}));
+
 // MongoDB connection string
 const db = process.env.mongoURI;
 
@@ -19,11 +25,5 @@ mongoose.connect(db, {
     useFindAndModify: false,
     useUnifiedTopology: true
 });
-
-// Use middleware returned by the graphqlHTTP function to respond to requests
-app.use('/graphql', graphqlHTTP({
-    schema,
-    graphiql: true
-}));
 
 app.listen(process.env.PORT || 3000);

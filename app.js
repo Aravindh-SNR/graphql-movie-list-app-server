@@ -2,7 +2,6 @@ const express = require('express');
 const graphqlHTTP = require('express-graphql');
 const schema = require('./schema/schema');
 const mongoose = require('mongoose');
-const config = require('config');
 const cors = require('cors');
 
 const app = express();
@@ -10,8 +9,8 @@ const app = express();
 // Allow cross-orgin requests
 app.use(cors());
 
-// Get MongoDB URI from the config folder
-const db = config.get('mongoURI');
+// MongoDB connection string
+const db = process.env.mongoURI;
 
 // Connect to MongoDB using Mongoose
 mongoose.connect(db, {

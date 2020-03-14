@@ -1,4 +1,4 @@
-GraphQL server for the movie list app at [this repository](https://aravindh-snr.github.io/graphql-movie-list-app/).
+GraphQL server for the movie list app at [this repository](https://github.com/Aravindh-SNR/graphql-movie-list-app).
 
 The server, using the express-graphql middleware, responds to queries and performs mutations by communicating with MongoDB via Mongoose.
 
